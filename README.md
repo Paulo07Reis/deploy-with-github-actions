@@ -1,1 +1,1 @@
-# CI-CD-with-Github-Actions
+# deploy-with-Github-Actions
