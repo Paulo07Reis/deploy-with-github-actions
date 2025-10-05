@@ -24,6 +24,7 @@ jobs:
 
       - name: Upload original para RAW
         run: |
+          echo "Upload dos arquivos CSV originais para S3 (RAW)"
           aws s3 cp ./data/ s3://${{ secrets.S3_BUCKET_NAME }}/raw/ \
           --recursive --exclude "*" --include "*.csv"
 
@@ -34,14 +35,17 @@ jobs:
 
       - name: Transformar dados (Trusted/Client)
         run: |
+          echo "Executando script de transformação"
           python scripts/transform.py ./data/ ./output/
 
       - name: Upload TRUSTED
         run: |
+          echo "Upload dos arquivos TRUSTED para S3"
           aws s3 cp ./output/ s3://${{ secrets.S3_BUCKET_NAME }}/trusted/ \
           --recursive --exclude "*" --include "trusted_*.csv"
 
       - name: Upload CLIENT
         run: |
+          echo "Upload dos arquivos CLIENT para S3"
           aws s3 cp ./output/ s3://${{ secrets.S3_BUCKET_NAME }}/client/ \
           --recursive --exclude "*" --include "client_*.csv"
